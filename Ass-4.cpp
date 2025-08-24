@@ -13,7 +13,7 @@ class Student {
     int rollno;
     Student();
     void input();
-    inline void display(const vector<Student> s,int rollno);
+    inline void display(const vector<Student>& s,int rollno);
     friend void marks(vector<Student>& s,int rollno);
 };
 
@@ -38,9 +38,11 @@ void Student::input(){
 }
 
 void marks(vector<Student>& s,int rollno){
+    bool flag=false;
     for (int i=0;i<s.size();i++){
 
         if(s[i].rollno==rollno){
+            flag=true;
             cout<<"Marks Entering For Student:-"<<s[i].name<<endl;
             cout<<"Rollno:-"<<s[i].rollno<<endl;
             cout<<"**Marks OF Three Subject of Student(50 Outoff)**"<<endl;
@@ -53,16 +55,22 @@ void marks(vector<Student>& s,int rollno){
 
     //Percentage calculate
             s[i].per=float((s[i].m1+s[i].m2+s[i].m3)/150.0*100);
+            break;
         }
-        else{
-            cout<<"Student Not Found"<<endl;
-        }
+        
         cout<<"\n\n";
     }
+    if(!flag){
+            cout<<"Student Not Found"<<endl;
+            cout<<"Press Enter"<<endl;
+            cin.ignore();
+            cin.get();
+        }
     
 }
 
-void Student::display(const vector<Student> s,int rollno){
+void Student::display(const vector<Student>& s,int rollno){
+    bool flag=false;
     if(s.empty()){
             cout<<"No Students Available"<<endl;
             cout<<"Press Enter"<<endl;
@@ -70,11 +78,13 @@ void Student::display(const vector<Student> s,int rollno){
         }
     for (int i=0;i<s.size();i++){
         if(s[i].rollno==rollno){
+            flag=true;
             cout<<"**Student Details**"<<endl;
             cout<<"Name:-"<<s[i].name<<endl;
             cout<<"Rollno:-"<<s[i].rollno<<endl;
             cout<<"Age:-"<<s[i].age<<endl;
             cout<<"Percentage of Student:-"<<s[i].per<<"%"<<endl;
+            break;
         }
         else {
             cout<<"Student Not Found"<<endl;
@@ -92,7 +102,7 @@ void Student::display(const vector<Student> s,int rollno){
 }
 
 int main(){
-    int choice,i=0,roll;
+    int choice,roll;
     vector<Student> s;
     while(true){
         cout<<"**Student Management System**"<<endl;
@@ -122,7 +132,7 @@ int main(){
         case 3: {
             cout<<"Enter Rollno of Student:-";
             cin>> roll;
-            s[i-1].display(s,roll);
+            s[0].display(s,roll);
             break;
         }
         case 4: {
