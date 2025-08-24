@@ -13,8 +13,8 @@ class Student {
     int rollno;
     Student();
     void input();
-    inline void display(vector<Student> s,int rollno);
-    friend void marks(vector<Student> s,int rollno);
+    inline void display(const vector<Student> s,int rollno);
+    friend void marks(vector<Student>& s,int rollno);
 };
 
 
@@ -37,7 +37,7 @@ void Student::input(){
 
 }
 
-void marks(vector<Student> s,int rollno){
+void marks(vector<Student>& s,int rollno){
     for (int i=0;i<s.size();i++){
 
         if(s[i].rollno==rollno){
@@ -62,7 +62,7 @@ void marks(vector<Student> s,int rollno){
     
 }
 
-void Student::display(vector<Student> s,int rollno){
+void Student::display(const vector<Student> s,int rollno){
     if(s.empty()){
             cout<<"No Students Available"<<endl;
             cout<<"Press Enter"<<endl;
