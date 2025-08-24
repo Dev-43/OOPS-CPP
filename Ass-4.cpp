@@ -1,29 +1,25 @@
 #include<iostream>
 #include<string>
 #include<windows.h>
-#include<conio.h>
+#include<vector>
 using namespace std;
 
 class Student {
-    static int cnt;
-    int rollno,age;
+    int age;
     string name;
     int m1,m2,m3;
     float per;
     public:
+    int rollno;
     Student();
-    ~Student(){
-        cout<<"Object Destroyed"<<endl; 
-    }
     void input();
-    inline void display(Student *s,int rollno);
-    friend void marks(Student *s,int rollno);
+    inline void display(vector<Student> s,int rollno);
+    friend void marks(vector<Student> s,int rollno);
 };
 
-int Student::cnt=0;
+
 
 Student::Student(){
-    cnt++;
     rollno=0;
     age=0;
     per=0.0;
@@ -41,8 +37,8 @@ void Student::input(){
 
 }
 
-void marks(Student *s,int rollno){
-    for (int i=0;i<Student::cnt;i++){
+void marks(vector<Student> s,int rollno){
+    for (int i=0;i<s.size();i++){
 
         if(s[i].rollno==rollno){
             cout<<"Marks Entering For Student:-"<<s[i].name<<endl;
@@ -66,12 +62,13 @@ void marks(Student *s,int rollno){
     
 }
 
-void Student::display(Student *s,int rollno){
-    if(cnt==0){
+void Student::display(vector<Student> s,int rollno){
+    if(s.empty()){
             cout<<"No Students Available"<<endl;
-            getch();
+            cout<<"Press Enter"<<endl;
+            cin.ignore();
         }
-    for (int i=0;i<Student::cnt;i++){
+    for (int i=0;i<s.size();i++){
         if(s[i].rollno==rollno){
             cout<<"**Student Details**"<<endl;
             cout<<"Name:-"<<s[i].name<<endl;
@@ -88,13 +85,15 @@ void Student::display(Student *s,int rollno){
 
                 cout<<"Percentage of Student:-"<<per<<"%"<<endl;
         }
-        getch();
+        cout<<"Press Enter"<<endl;
+        cin.ignore();
+        cin.get();
     }
 }
 
 int main(){
     int choice,i=0,roll;
-    Student *s;
+    vector<Student> s;
     while(true){
         cout<<"**Student Management System**"<<endl;
         system("cls");
@@ -107,10 +106,12 @@ int main(){
 
     cout<<"Enter Your Choice:-";
     cin>>choice;
+    vector<Student> s;
     switch(choice){
         case 1: {
-            s=new Student[++i];
-            s[i-1].input();
+            Student temp;
+            temp.input();
+            s.push_back(temp);
             break;
         }
         case 2: {
@@ -128,8 +129,13 @@ int main(){
         case 4: {
             cout<<"Enter Rollno of Student to delete:-";
             cin>>roll;
-            delete[] s;
-            cout<<"Student Deleted Successfully"<<endl;
+            for (int i=0;i<s.size();i++){
+                if(s[i].rollno==roll){
+                    s.erase(s.begin()+i);
+                    cout<<"Student Deleted Successfully"<<endl;
+                    break;
+                }
+            }
             break;
         }
         case 5: {
