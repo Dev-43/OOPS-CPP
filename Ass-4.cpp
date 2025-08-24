@@ -106,7 +106,7 @@ int main(){
 
     cout<<"Enter Your Choice:-";
     cin>>choice;
-    vector<Student> s;
+
     switch(choice){
         case 1: {
             Student temp;
