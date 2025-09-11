@@ -27,8 +27,8 @@ Student::Student(){
 }
 
 void Student::input(){
-    cout<<"Enter Name Of Student:-";
     cin.ignore();
+    cout<<"Enter Name Of Student:-";
     getline(cin,name);
     cout<<"Enter Rollno:-";
     cin>>rollno;
@@ -69,51 +69,38 @@ void marks(vector<Student>& s,int rollno){
     
 }
 
-void Student::display(const vector<Student>& s,int rollno){
-    bool flag=false;
-    if(s.empty()){
-            cout<<"No Students Available"<<endl;
-            cout<<"Press Enter"<<endl;
-            cin.ignore();
-        }
-    for (int i=0;i<s.size();i++){
-        if(s[i].rollno==rollno){
-            flag=true;
-            cout<<"**Student Details**"<<endl;
-            cout<<"Name:-"<<s[i].name<<endl;
-            cout<<"Rollno:-"<<s[i].rollno<<endl;
-            cout<<"Age:-"<<s[i].age<<endl;
-            cout<<"Percentage of Student:-"<<s[i].per<<"%"<<endl;
+void Student::display(const vector<Student>& s, int rollno) {
+    bool flag = false;
+    for (size_t i = 0; i < s.size(); i++) {
+        if (s[i].rollno == rollno) {
+            flag = true;
+            cout << "**Student Details**" << endl;
+            cout << "Name:-" << s[i].name << endl;
+            cout << "Rollno:-" << s[i].rollno << endl;
+            cout << "Age:-" << s[i].age << endl;
+            cout << "Percentage of Student:-" << s[i].per << "%" << endl;
             break;
         }
-        else {
-            cout<<"Student Not Found"<<endl;
-            cout<<"**Student Details oF Last Added Student**"<<endl;
-            cout<<"Name:-"<<name<<endl;
-            cout<<"Rollno:-"<<s[i].rollno<<endl;
-            cout<<"Age:-"<<age<<endl;
-
-                cout<<"Percentage of Student:-"<<per<<"%"<<endl;
-        }
-        cout<<"Press Enter"<<endl;
-        cin.ignore();
-        cin.get();
     }
+    if (!flag) {
+        cout << "Student Not Found" << endl;
+    }
+    cout << "Press Enter" << endl;
+    cin.ignore();
+    cin.get();
 }
 
 int main(){
     int choice,roll;
     vector<Student> s;
-    while(true){
-        cout<<"**Student Management System**"<<endl;
-        system("cls");
+    cout<<"**Student Management System**"<<endl;
     cout<<"1.Add Student"<<endl;
     cout<<"2.Add Marks For specific Student"<<endl;
     cout<<"3.Display Student"<<endl;
     cout<<"4.Delete Student"<<endl;
     cout<<"5.Exit"<<endl;
     cout<<"\n";
-
+    while(true){
     cout<<"Enter Your Choice:-";
     cin>>choice;
     switch(choice){
@@ -132,18 +119,24 @@ int main(){
         case 3: {
             cout<<"Enter Rollno of Student:-";
             cin>> roll;
-            s[0].display(s,roll);
+            if(!s.empty())
+                s.back().display(s,roll);
             break;
         }
         case 4: {
             cout<<"Enter Rollno of Student to delete:-";
             cin>>roll;
+            bool found=false;
             for (int i=0;i<s.size();i++){
                 if(s[i].rollno==roll){
                     s.erase(s.begin()+i);
                     cout<<"Student Deleted Successfully"<<endl;
+                    found=true;
                     break;
                 }
+            }
+            if(!found){
+                cout<<"Student Not Found"<<endl;
             }
             break;
         }
